@@ -43,6 +43,7 @@ module.exports = function (Messaging) {
             roomId: data.roomId,
             deleted: 0,
             system: data.system || 0,
+            anon: data.anon || 0, // assuming anon : boolean, stored as binary
         };
 
         if (data.ip) {
