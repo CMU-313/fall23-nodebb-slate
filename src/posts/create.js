@@ -12,6 +12,18 @@ const groups = require('../groups');
 const utils = require('../utils');
 
 module.exports = function (Posts) {
+    /**
+     * Creates a new post.
+     *
+     * @param {Object} data - The post data.
+     * @param {number} data.uid - The user ID.
+     * @param {number} data.tid - The topic ID.
+     * @param {string} data.content - The content of the post.
+     * @param {number} [data.timestamp] - The timestamp of the post.
+     * @param {boolean} [data.isMain=false] - Whether the post is the main post in a topic.
+     * @throws {Error} If the uid is invalid or data.toPid is invalid.
+     * @returns {Promise<Object>} The created post object.
+     */
     Posts.create = async function (data) {
         // This is an internal method, consider using Topics.reply instead
         const { uid } = data;
@@ -19,6 +31,14 @@ module.exports = function (Posts) {
         const content = data.content.toString();
         const timestamp = data.timestamp || Date.now();
         const isMain = data.isMain || false;
+
+         // Assert parameter types
+        assert(typeof uid === 'number', 'Parameter "uid" must be a number');
+        assert(typeof tid === 'number', 'Parameter "tid" must be a number');
+        assert(typeof content === 'string', 'Parameter "content" must be a string');
+        assert(typeof timestamp === 'number', 'Parameter "timestamp" must be a number');
+        assert(typeof isMain === 'boolean', 'Parameter "isMain" must be a boolean');
+
 
         if (!uid && parseInt(uid, 10) !== 0) {
             throw new Error('[[error:invalid-uid]]');
