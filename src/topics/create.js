@@ -32,7 +32,13 @@ module.exports = function (Topics) {
         // This is an internal method, consider using Topics.post instead
         const timestamp = data.timestamp || Date.now();
 
-       
+        // Assert parameter types
+        assert(typeof data.uid === 'number', 'Parameter "uid" must be a number');
+        assert(typeof data.cid === 'number', 'Parameter "cid" must be a number');
+        assert(typeof data.title === 'string', 'Parameter "title" must be a string');
+        assert(Array.isArray(data.tags) || data.tags === undefined, 'Parameter "tags" must be an array or undefined');
+        assert(typeof timestamp === 'number', 'Parameter "timestamp" must be a number');
+
 
         const tid = await db.incrObjectField('global', 'nextTid');
 
@@ -104,7 +110,14 @@ module.exports = function (Topics) {
      * @returns {Promise<Object>} An object containing topicData and postData.
      */
     Topics.post = async function (data) {
-       
+        // Assert parameter types
+        assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');
+        assert(typeof data.uid === 'number', 'Parameter "uid" must be a number');
+        assert(typeof data.title === 'string' || data.title === undefined, 'Parameter "title" must be a string or undefined');
+        assert(Array.isArray(data.tags) || data.tags === undefined, 'Parameter "tags" must be an array or undefined');
+        assert(typeof data.content === 'string' || data.content === undefined, 'Parameter "content" must be a string or undefined');
+        assert(typeof data.fromQueue === 'boolean' || data.fromQueue === undefined, 'Parameter "fromQueue" must be a boolean or undefined');
+
         data = await plugins.hooks.fire('filter:topic.post', data);
         const { uid } = data;
 
@@ -197,7 +210,14 @@ module.exports = function (Topics) {
      * @returns {Promise<Object>} An object containing topicData and postData.
      */
     Topics.reply = async function (data) {
-        
+        // Assert parameter types
+        assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');
+        assert(typeof data.uid === 'number', 'Parameter "uid" must be a number');
+        assert(typeof data.title === 'string' || data.title === undefined, 'Parameter "title" must be a string or undefined');
+        assert(Array.isArray(data.tags) || data.tags === undefined, 'Parameter "tags" must be an array or undefined');
+        assert(typeof data.content === 'string' || data.content === undefined, 'Parameter "content" must be a string or undefined');
+        assert(typeof data.fromQueue === 'boolean' || data.fromQueue === undefined, 'Parameter "fromQueue" must be a boolean or undefined');
+
         data = await plugins.hooks.fire('filter:topic.reply', data);
         const { tid } = data;
         const { uid } = data;
