@@ -24,8 +24,12 @@
             <a href="{config.relative_path}/user/{../user.userslug}">{buildAvatar(../user, "md", true, "user-img not-responsive")}</a>
 
             <div class="post-author">
-                <a href="{config.relative_path}/user/{../user.userslug}">{../user.displayname}</a><br />
-                <span class="timeago" title="{../timestampISO}"></span>
+                <!-- IF posts.anon --> Anonymous <!-- ENDIF posts.anon -->
+
+                <!-- IF !posts.anon -->
+                    <a href="{config.relative_path}/user/{../user.userslug}">{../user.displayname}</a><br />
+                    <span class="timeago" title="{../timestampISO}"></span>
+                <!-- ENDIF !posts.anon -->
             </div>
         </div>
     </div>
