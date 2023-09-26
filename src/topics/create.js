@@ -16,9 +16,23 @@ const categories = require('../categories');
 const translator = require('../translator');
 
 module.exports = function (Topics) {
+    /**
+     * Creates a new topic.
+     *
+     * @param {Object} data - The topic data.
+     * @param {number} data.uid - The user ID.
+     * @param {number} data.cid - The category ID.
+     * @param {string} data.title - The title of the topic.
+     * @param {Array<string>} [data.tags] - An array of tags for the topic.
+     * @param {number} [data.timestamp] - The timestamp of the topic.
+     * @throws {Error} If the category does not exist or if the user does not have the required privileges.
+     * @returns {Promise<number>} The topic ID.
+     */
     Topics.create = async function (data) {
         // This is an internal method, consider using Topics.post instead
         const timestamp = data.timestamp || Date.now();
+
+       
 
         const tid = await db.incrObjectField('global', 'nextTid');
 
@@ -75,8 +89,22 @@ module.exports = function (Topics) {
         plugins.hooks.fire('action:topic.save', { topic: _.clone(topicData), data: data });
         return topicData.tid;
     };
-
+      /**
+     * Posts a reply to a topic.
+     *
+     * @param {Object} data - The reply data.
+     * @param {number} data.tid - The topic ID.
+     * @param {number} data.uid - The user ID.
+     * @param {string} [data.title] - The title of the reply.
+     * @param {Array<string>} [data.tags] - An array of tags for the reply.
+     * @param {string} [data.content] - The content of the reply.
+     * @param {Object} [data.req] - The request object.
+     * @param {boolean} [data.fromQueue] - Whether the reply is from a queue.
+     * @throws {Error} If the topic does not exist, the user does not have the required privileges, or other validation fails.
+     * @returns {Promise<Object>} An object containing topicData and postData.
+     */
     Topics.post = async function (data) {
+       
         data = await plugins.hooks.fire('filter:topic.post', data);
         const { uid } = data;
 
@@ -154,8 +182,22 @@ module.exports = function (Topics) {
             postData: postData,
         };
     };
-
+     /**
+     * Posts a reply to a topic.
+     *
+     * @param {Object} data - The reply data.
+     * @param {number} data.tid - The topic ID.
+     * @param {number} data.uid - The user ID.
+     * @param {string} [data.title] - The title of the reply.
+     * @param {Array<string>} [data.tags] - An array of tags for the reply.
+     * @param {string} [data.content] - The content of the reply.
+     * @param {Object} [data.req] - The request object.
+     * @param {boolean} [data.fromQueue] - Whether the reply is from a queue.
+     * @throws {Error} If the topic does not exist, the user does not have the required privileges, or other validation fails.
+     * @returns {Promise<Object>} An object containing topicData and postData.
+     */
     Topics.reply = async function (data) {
+        
         data = await plugins.hooks.fire('filter:topic.reply', data);
         const { tid } = data;
         const { uid } = data;
