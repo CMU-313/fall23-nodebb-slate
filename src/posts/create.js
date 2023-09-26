@@ -88,6 +88,10 @@ module.exports = function (Posts) {
         result = await plugins.hooks.fire('filter:post.get', { post: postData, uid: data.uid });
         result.post.isMain = isMain;
         plugins.hooks.fire('action:post.save', { post: _.clone(result.post) });
+        // Assert return type
+        assert(typeof result.post === 'object', 'Return type must be an object');
+
+
         return result.post;
     };
 
