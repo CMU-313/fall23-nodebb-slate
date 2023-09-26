@@ -93,6 +93,8 @@ module.exports = function (Topics) {
         }
 
         plugins.hooks.fire('action:topic.save', { topic: _.clone(topicData), data: data });
+        // Assert return type
+        assert(typeof topicData.tid === 'number', 'Return type must be a number');
         return topicData.tid;
     };
       /**
