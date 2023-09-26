@@ -95,6 +95,12 @@ module.exports = function (Posts) {
         return result.post;
     };
 
+    /**
+     * Adds a reply to a post.
+     *
+     * @param {Object} postData - The post data.
+     * @param {number} timestamp - The timestamp of the reply.
+     */
     async function addReplyTo(postData, timestamp) {
         if (!postData.toPid) {
             return;
