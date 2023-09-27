@@ -118,6 +118,12 @@ module.exports = function (Topics) {
         postData.ip = data.req ? data.req.ip : null;
         postData.isMain = true;
         postData = await posts.create(postData);
+        // checks the anon boolean and sets the states accordingly
+        if (data.anon) {
+            postData.anon = 1;
+        } else {
+            postData.anon = 0;
+        }
         postData = await onNewPost(postData, data);
 
         const [settings, topics] = await Promise.all([
@@ -182,6 +188,12 @@ module.exports = function (Topics) {
 
         data.ip = data.req ? data.req.ip : null;
         let postData = await posts.create(data);
+        // checks the anon boolean and sets the states accordingly
+        if (data.anon) {
+            postData.anon = 1;
+        } else {
+            postData.anon = 0;
+        }
         postData = await onNewPost(postData, data);
 
         const settings = await user.getSettings(uid);
