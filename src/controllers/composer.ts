@@ -11,6 +11,7 @@ import plugins from '../plugins';
 import topics from '../topics';
 import posts from '../posts';
 import helpers from './helpers';
+import { boolean } from 'webidl-conversions';
 
 type ComposerBuildData = {
     templateData: TemplateData
@@ -62,12 +63,13 @@ type ComposerData = {
     timestamp: number,
     content: string,
     fromQueue: boolean,
+    anon: boolean
     tid?: number,
     cid?: number,
     title?: string,
     tags?: string[],
     thumb?: string,
-    noscript?: string
+    noscript?: string,
 }
 
 type QueueResult = {
@@ -87,6 +89,7 @@ export async function post(req: Request<object, object, ComposerData> & { uid: n
         timestamp: Date.now(),
         content: body.content,
         fromQueue: false,
+        anon: false,
     };
     req.body.noscript = 'true';
 
