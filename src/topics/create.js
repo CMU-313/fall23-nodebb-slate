@@ -120,7 +120,7 @@ module.exports = function (Topics) {
         postData = await posts.create(postData);
         // checks the anon boolean and sets the states accordingly
         if (data.anon) {
-            postdata.anon = 1;
+            postData.anon = 1;
         } else {
             postData.anon = 0;
         }
@@ -190,7 +190,7 @@ module.exports = function (Topics) {
         let postData = await posts.create(data);
         // checks the anon boolean and sets the states accordingly
         if (data.anon) {
-            postdata.anon = 1;
+            postData.anon = 1;
         } else {
             postData.anon = 0;
         }
