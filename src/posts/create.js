@@ -35,6 +35,7 @@ module.exports = function (Posts) {
             tid: tid,
             content: content,
             timestamp: timestamp,
+            anon: data.anon || 0, // assuming anon : boolean, stored as binary
         };
 
         if (data.toPid) {
