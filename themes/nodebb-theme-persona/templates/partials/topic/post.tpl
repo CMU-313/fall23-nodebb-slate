@@ -1,9 +1,11 @@
 <div class="clearfix post-header">
     <div class="icon pull-left">
+    <!-- IF !posts.anon -->
         <a href="<!-- IF posts.user.userslug -->{config.relative_path}/user/{posts.user.userslug}<!-- ELSE -->#<!-- ENDIF posts.user.userslug -->">
             {buildAvatar(posts.user, "sm2x", true, "", "user/picture")}
             <i component="user/status" class="fa fa-circle status {posts.user.status}" title="[[global:{posts.user.status}]]"></i>
         </a>
+    <!-- ENDIF-->
     </div>
 
     <small class="pull-left">
