@@ -13,6 +13,16 @@
             <!-- IF !posts.anon -->
                 <a href="<!-- IF posts.user.userslug -->{config.relative_path}/user/{posts.user.userslug}<!-- ELSE -->#<!-- ENDIF posts.user.userslug -->" itemprop="author" data-username="{posts.user.username}" data-uid="{posts.user.uid}">{posts.user.displayname}</a>
             <!-- END !posts.anon -->
+
+            <div id="posts-json">{JSON.stringify(posts)}, {posts.anon}</div>
+            <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                var jsonDiv = document.getElementById('posts-json');
+                if (jsonDiv && posts) {
+                    jsonDiv.innerHTML = '<pre>' + JSON.stringify(posts, null, 2) + '</pre>';
+                }
+            });
+            </script>
         </strong>
         <!-- IMPORT partials/topic/badge.tpl -->
 
