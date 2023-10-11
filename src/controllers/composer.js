@@ -30,6 +30,8 @@ function get(req, res, callback) {
             next: callback,
             templateData: {},
         });
+        console.log("This is the template data");
+        console.log(data.templateData);
         if (res.headersSent) {
             return;
         }
@@ -57,7 +59,7 @@ function post(req, res) {
             timestamp: Date.now(),
             content: body.content,
             fromQueue: false,
-            anon: false,
+            anon: true,
         };
         req.body.noscript = 'true';
         if (!data.content) {

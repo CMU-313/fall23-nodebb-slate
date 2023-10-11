@@ -117,8 +117,15 @@ module.exports = function (Topics) {
         postData.tid = tid;
         postData.ip = data.req ? data.req.ip : null;
         postData.isMain = true;
+        // checks the anon boolean and sets the states accordingly
+        if (data.anon) {
+            postData.anon = 1;
+        } else {
+            postData.anon = 0;
+        }
         postData = await posts.create(postData);
         postData = await onNewPost(postData, data);
+        
 
         const [settings, topics] = await Promise.all([
             user.getSettings(uid),
