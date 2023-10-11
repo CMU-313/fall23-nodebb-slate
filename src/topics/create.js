@@ -111,7 +111,7 @@ module.exports = function (Topics) {
      * @throws {Error} If the topic does not exist, the user does not have
      *                                  the required privileges, or other validation fails.
      * @returns {Promise<Object>} An object containing topicData and postData.
-     */
+     */  
     Topics.post = async function (data) {
         data = await plugins.hooks.fire('filter:topic.post', data);
         const { uid } = data;
@@ -228,7 +228,7 @@ module.exports = function (Topics) {
     */
     Topics.reply = async function (data) {
         // Assert parameter types
-        assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');
+        // assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');
         assert(typeof data.uid === 'number', 'Parameter "uid" must be a number');
         assert(typeof data.title === 'string' || data.title === undefined, 'Parameter "title" must be a string or undefined');
         assert(Array.isArray(data.tags) || data.tags === undefined, 'Parameter "tags" must be an array or undefined');
