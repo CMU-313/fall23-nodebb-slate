@@ -25,6 +25,7 @@
 
             <div class="post-author">
                 <!-- IF posts.anon --> Anonymous <!-- ENDIF posts.anon -->
+                
                 <span class="timeago" title="{../timestampISO}"></span>	
                 <!-- IF !posts.anon -->
                     <a href="{config.relative_path}/user/{../user.userslug}">{../user.displayname}</a><br />
