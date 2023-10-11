@@ -111,7 +111,7 @@ module.exports = function (Topics) {
      * @throws {Error} If the topic does not exist, the user does not have
      *                                  the required privileges, or other validation fails.
      * @returns {Promise<Object>} An object containing topicData and postData.
-     */  
+     */
     Topics.post = async function (data) {
         data = await plugins.hooks.fire('filter:topic.post', data);
         const { uid } = data;
