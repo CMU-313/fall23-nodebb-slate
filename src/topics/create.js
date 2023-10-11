@@ -2,7 +2,7 @@
 'use strict';
 
 const _ = require('lodash');
-const assert = require('node:assert/strict');
+const assert = require('assert');
 const db = require('../database');
 const utils = require('../utils');
 const slugify = require('../slugify');
