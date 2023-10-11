@@ -117,7 +117,7 @@ module.exports = function (Topics) {
         const { uid } = data;
 
         // Assert parameter types
-        assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');
+        // assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');
         assert(typeof data.uid === 'number', 'Parameter "uid" must be a number');
         assert(typeof data.title === 'string' || data.title === undefined, 'Parameter "title" must be a string or undefined');
         assert(Array.isArray(data.tags) || data.tags === undefined, 'Parameter "tags" must be an array or undefined');
