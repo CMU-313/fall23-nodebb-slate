@@ -2,7 +2,7 @@
 'use strict';
 
 const _ = require('lodash');
-
+const assert = require('node:assert/strict');
 const db = require('../database');
 const utils = require('../utils');
 const slugify = require('../slugify');
@@ -97,7 +97,7 @@ module.exports = function (Topics) {
         assert(typeof topicData.tid === 'number', 'Return type must be a number');
         return topicData.tid;
     };
-      /**
+    /**
      * Posts a reply to a topic.
      *
      * @param {Object} data - The reply data.
@@ -108,7 +108,8 @@ module.exports = function (Topics) {
      * @param {string} [data.content] - The content of the reply.
      * @param {Object} [data.req] - The request object.
      * @param {boolean} [data.fromQueue] - Whether the reply is from a queue.
-     * @throws {Error} If the topic does not exist, the user does not have the required privileges, or other validation fails.
+     * @throws {Error} If the topic does not exist, the user does not have
+     *                                  the required privileges, or other validation fails.
      * @returns {Promise<Object>} An object containing topicData and postData.
      */
     Topics.post = async function (data) {
@@ -174,7 +175,7 @@ module.exports = function (Topics) {
             postData.anon = 0;
         }
         postData = await onNewPost(postData, data);
-        
+
 
         const [settings, topics] = await Promise.all([
             user.getSettings(uid),
@@ -210,20 +211,21 @@ module.exports = function (Topics) {
             postData: postData,
         };
     };
-     /**
-     * Posts a reply to a topic.
-     *
-     * @param {Object} data - The reply data.
-     * @param {number} data.tid - The topic ID.
-     * @param {number} data.uid - The user ID.
-     * @param {string} [data.title] - The title of the reply.
-     * @param {Array<string>} [data.tags] - An array of tags for the reply.
-     * @param {string} [data.content] - The content of the reply.
-     * @param {Object} [data.req] - The request object.
-     * @param {boolean} [data.fromQueue] - Whether the reply is from a queue.
-     * @throws {Error} If the topic does not exist, the user does not have the required privileges, or other validation fails.
-     * @returns {Promise<Object>} An object containing topicData and postData.
-     */
+    /**
+    * Posts a reply to a topic.
+    *
+    * @param {Object} data - The reply data.
+    * @param {number} data.tid - The topic ID.
+    * @param {number} data.uid - The user ID.
+    * @param {string} [data.title] - The title of the reply.
+    * @param {Array<string>} [data.tags] - An array of tags for the reply.
+    * @param {string} [data.content] - The content of the reply.
+    * @param {Object} [data.req] - The request object.
+    * @param {boolean} [data.fromQueue] - Whether the reply is from a queue.
+    * @throws {Error} If the topic does not exist, the user does not
+    *                                   have the required privileges, or other validation fails.
+    * @returns {Promise<Object>} An object containing topicData and postData.
+    */
     Topics.reply = async function (data) {
         // Assert parameter types
         assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');

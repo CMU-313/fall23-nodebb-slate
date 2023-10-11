@@ -30,8 +30,6 @@ function get(req, res, callback) {
             next: callback,
             templateData: {},
         });
-        console.log("This is the template data");
-        console.log(data.templateData);
         if (res.headersSent) {
             return;
         }
