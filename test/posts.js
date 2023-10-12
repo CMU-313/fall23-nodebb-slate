@@ -245,6 +245,22 @@ describe('Post\'s', () => {
             assert.strictEqual(typeof post.anon, 'boolean');
             assert.strictEqual(post.anon, true);
         });
+        it('should reject creating a post with a non-boolean "anon" value', async () => {
+            try {
+                await topics.post({
+                    uid: voteeUid,
+                    cid: cid,
+                    title: 'Invalid Anon Test Post',
+                    content: 'This post has an invalid anon setting',
+                    anon: 'invalid', // Set anon to a non-boolean value
+                });
+            } catch (err) {
+                assert.strictEqual(err.message, 'Invalid anon setting');
+            }
+        });
+
+
+
 
         it('should set the "anon" field as a boolean (false)', async () => {
             // Create a new post with the 'anon' field set to false (boolean)
