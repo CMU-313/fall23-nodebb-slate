@@ -103,6 +103,8 @@ TopicObject:
               description: A topic identifier
             content:
               type: string
+            anon:
+              type: boolean
             timestampISO:
               type: string
               description: An ISO 8601 formatted date string (complementing `timestamp`)
