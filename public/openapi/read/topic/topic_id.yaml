@@ -61,6 +61,8 @@ get:
                           description: A topic identifier
                         content:
                           type: string
+                        anon:
+                          type: string
                         timestamp:
                           type: number
                         votes:
