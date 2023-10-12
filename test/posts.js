@@ -245,6 +245,22 @@ describe('Post\'s', () => {
             assert.strictEqual(typeof post.anon, 'boolean');
             assert.strictEqual(post.anon, true);
         });
+
+        it('should set the "anon" field as a boolean (false)', async () => {
+            // Create a new post with the 'anon' field set to false (boolean)
+            const postData = await topics.post({
+                uid: voteeUid,
+                cid: cid,
+                title: 'Test Post without Anon',
+                content: 'This is a test post with anon set to false',
+                anon: false, // Set anon to false
+            });
+        
+            // Retrieve the post data and check if 'anon' is a boolean (false)
+            const post = await posts.getPostData(postData.pid);
+            assert.strictEqual(typeof post.anon, 'boolean');
+            assert.strictEqual(post.anon, false);
+        });
         
         it('should downvote a post', async () => {
             const result = await apiPosts.downvote({ uid: voterUid }, { pid: postData.pid, room_id: 'topic_1' });
