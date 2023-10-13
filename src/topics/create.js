@@ -32,14 +32,6 @@ module.exports = function (Topics) {
         // This is an internal method, consider using Topics.post instead
         const timestamp = data.timestamp || Date.now();
 
-        // Assert parameter types
-        assert(typeof data.uid === 'number', 'Parameter "uid" must be a number');
-        assert(typeof data.cid === 'number', 'Parameter "cid" must be a number');
-        assert(typeof data.title === 'string', 'Parameter "title" must be a string');
-        assert(Array.isArray(data.tags) || data.tags === undefined, 'Parameter "tags" must be an array or undefined');
-        assert(typeof timestamp === 'number', 'Parameter "timestamp" must be a number');
-
-
         const tid = await db.incrObjectField('global', 'nextTid');
 
         let topicData = {
@@ -54,6 +46,13 @@ module.exports = function (Topics) {
             postcount: 0,
             viewcount: 0,
         };
+
+        // Assert parameter types
+        assert(typeof data.uid === 'number', 'Parameter "uid" must be a number');
+        assert(typeof data.cid === 'string', 'Parameter "cid" must be a string');
+        assert(typeof data.title === 'string', 'Parameter "title" must be a string');
+        assert(Array.isArray(data.tags) || data.tags === undefined, 'Parameter "tags" must be an array or undefined');
+        assert(typeof timestamp === 'number', 'Parameter "timestamp" must be a number');
 
         if (Array.isArray(data.tags) && data.tags.length) {
             topicData.tags = data.tags.join(',');
