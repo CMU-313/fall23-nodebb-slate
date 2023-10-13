@@ -2530,7 +2530,15 @@ describe('Controllers', () => {
                 cid: cid,
                 title: 'no js is good',
                 content: 'a topic with noscript',
+                anon: true // add the anon field to the data
             };
+
+            // Check if the 'anon' field is a boolean
+            if (typeof data.anon !== 'boolean') {
+                done(new Error('Invalid "anon" field. It must be a boolean.'));
+                return;
+            }
+            
             request.post(`${nconf.get('url')}/compose`, {
                 form: data,
                 jar: jar,
