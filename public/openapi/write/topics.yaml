@@ -19,6 +19,9 @@ post:
             content:
               type: string
               example: This is the test topic's content
+            anon:
+              type: boolean
+              example: This is the test topic's anon field
             tags:
               type: array
               items:

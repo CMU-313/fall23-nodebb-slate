@@ -1,7 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
-
+const assert = require('assert');
 const meta = require('../meta');
 const db = require('../database');
 const plugins = require('../plugins');
@@ -32,9 +32,9 @@ module.exports = function (Posts) {
         const timestamp = data.timestamp || Date.now();
         const isMain = data.isMain || false;
 
-         // Assert parameter types
+        // Assert parameter types
         assert(typeof uid === 'number', 'Parameter "uid" must be a number');
-        assert(typeof tid === 'number', 'Parameter "tid" must be a number');
+        // assert(typeof tid === 'number', 'Parameter "tid" must be a number');
         assert(typeof content === 'string', 'Parameter "content" must be a string');
         assert(typeof timestamp === 'number', 'Parameter "timestamp" must be a number');
         assert(typeof isMain === 'boolean', 'Parameter "isMain" must be a boolean');

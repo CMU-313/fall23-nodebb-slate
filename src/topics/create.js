@@ -2,7 +2,7 @@
 'use strict';
 
 const _ = require('lodash');
-
+const assert = require('assert');
 const db = require('../database');
 const utils = require('../utils');
 const slugify = require('../slugify');
@@ -97,7 +97,7 @@ module.exports = function (Topics) {
         assert(typeof topicData.tid === 'number', 'Return type must be a number');
         return topicData.tid;
     };
-      /**
+    /**
      * Posts a reply to a topic.
      *
      * @param {Object} data - The reply data.
@@ -108,20 +108,21 @@ module.exports = function (Topics) {
      * @param {string} [data.content] - The content of the reply.
      * @param {Object} [data.req] - The request object.
      * @param {boolean} [data.fromQueue] - Whether the reply is from a queue.
-     * @throws {Error} If the topic does not exist, the user does not have the required privileges, or other validation fails.
+     * @throws {Error} If the topic does not exist, the user does not have
+     *                                  the required privileges, or other validation fails.
      * @returns {Promise<Object>} An object containing topicData and postData.
      */
     Topics.post = async function (data) {
+        data = await plugins.hooks.fire('filter:topic.post', data);
+        const { uid } = data;
+
         // Assert parameter types
-        assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');
+        // assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');
         assert(typeof data.uid === 'number', 'Parameter "uid" must be a number');
         assert(typeof data.title === 'string' || data.title === undefined, 'Parameter "title" must be a string or undefined');
         assert(Array.isArray(data.tags) || data.tags === undefined, 'Parameter "tags" must be an array or undefined');
         assert(typeof data.content === 'string' || data.content === undefined, 'Parameter "content" must be a string or undefined');
         assert(typeof data.fromQueue === 'boolean' || data.fromQueue === undefined, 'Parameter "fromQueue" must be a boolean or undefined');
-
-        data = await plugins.hooks.fire('filter:topic.post', data);
-        const { uid } = data;
 
         data.title = String(data.title).trim();
         data.tags = data.tags || [];
@@ -160,21 +161,17 @@ module.exports = function (Topics) {
         postData.tid = tid;
         postData.ip = data.req ? data.req.ip : null;
         postData.isMain = true;
+
         // checks the anon boolean and sets the states accordingly
         if (data.anon) {
             postData.anon = 1;
         } else {
             postData.anon = 0;
         }
+
         postData = await posts.create(postData);
-        // checks the anon boolean and sets the states accordingly
-        if (data.anon) {
-            postData.anon = 1;
-        } else {
-            postData.anon = 0;
-        }
         postData = await onNewPost(postData, data);
-        
+
 
         const [settings, topics] = await Promise.all([
             user.getSettings(uid),
@@ -210,23 +207,24 @@ module.exports = function (Topics) {
             postData: postData,
         };
     };
-     /**
-     * Posts a reply to a topic.
-     *
-     * @param {Object} data - The reply data.
-     * @param {number} data.tid - The topic ID.
-     * @param {number} data.uid - The user ID.
-     * @param {string} [data.title] - The title of the reply.
-     * @param {Array<string>} [data.tags] - An array of tags for the reply.
-     * @param {string} [data.content] - The content of the reply.
-     * @param {Object} [data.req] - The request object.
-     * @param {boolean} [data.fromQueue] - Whether the reply is from a queue.
-     * @throws {Error} If the topic does not exist, the user does not have the required privileges, or other validation fails.
-     * @returns {Promise<Object>} An object containing topicData and postData.
-     */
+    /**
+    * Posts a reply to a topic.
+    *
+    * @param {Object} data - The reply data.
+    * @param {number} data.tid - The topic ID.
+    * @param {number} data.uid - The user ID.
+    * @param {string} [data.title] - The title of the reply.
+    * @param {Array<string>} [data.tags] - An array of tags for the reply.
+    * @param {string} [data.content] - The content of the reply.
+    * @param {Object} [data.req] - The request object.
+    * @param {boolean} [data.fromQueue] - Whether the reply is from a queue.
+    * @throws {Error} If the topic does not exist, the user does not
+    *                                   have the required privileges, or other validation fails.
+    * @returns {Promise<Object>} An object containing topicData and postData.
+    */
     Topics.reply = async function (data) {
         // Assert parameter types
-        assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');
+        // assert(typeof data.tid === 'number', 'Parameter "tid" must be a number');
         assert(typeof data.uid === 'number', 'Parameter "uid" must be a number');
         assert(typeof data.title === 'string' || data.title === undefined, 'Parameter "title" must be a string or undefined');
         assert(Array.isArray(data.tags) || data.tags === undefined, 'Parameter "tags" must be an array or undefined');
