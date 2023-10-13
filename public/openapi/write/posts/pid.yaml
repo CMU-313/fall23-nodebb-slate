@@ -34,6 +34,8 @@ get:
                     description: A topic identifier
                   content:
                     type: string
+                  anon:
+                    type: boolean
                   timestamp:
                     type: number
                   flagId:
