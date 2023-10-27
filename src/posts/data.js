@@ -1,13 +1,22 @@
-'use strict';
+"use strict";
 
-const db = require('../database');
-const plugins = require('../plugins');
-const utils = require('../utils');
+const db = require("../database");
+const plugins = require("../plugins");
+const utils = require("../utils");
 
 const intFields = [
-    'uid', 'pid', 'tid', 'deleted', 'timestamp',
-    'upvotes', 'downvotes', 'deleterUid', 'edited',
-    'replies', 'bookmarks', 'anon',
+    "uid",
+    "pid",
+    "tid",
+    "deleted",
+    "timestamp",
+    "upvotes",
+    "downvotes",
+    "deleterUid",
+    "edited",
+    "replies",
+    "bookmarks",
+    "anon",
 ];
 
 module.exports = function (Posts) {
@@ -15,14 +24,14 @@ module.exports = function (Posts) {
         if (!Array.isArray(pids) || !pids.length) {
             return [];
         }
-        const keys = pids.map(pid => `post:${pid}`);
+        const keys = pids.map((pid) => `post:${pid}`);
         const postData = await db.getObjects(keys, fields);
-        const result = await plugins.hooks.fire('filter:post.getFields', {
+        const result = await plugins.hooks.fire("filter:post.getFields", {
             pids: pids,
             posts: postData,
             fields: fields,
         });
-        result.posts.forEach(post => modifyPost(post, fields));
+        result.posts.forEach((post) => modifyPost(post, fields));
         return result.posts;
     };
 
@@ -51,21 +60,25 @@ module.exports = function (Posts) {
 
     Posts.setPostFields = async function (pid, data) {
         await db.setObject(`post:${pid}`, data);
-        plugins.hooks.fire('action:post.setFields', { data: { ...data, pid } });
+        plugins.hooks.fire("action:post.setFields", { data: { ...data, pid } });
     };
 };
 
 function modifyPost(post, fields) {
     if (post) {
         db.parseIntFields(post, intFields, fields);
-        if (post.hasOwnProperty('upvotes') && post.hasOwnProperty('downvotes')) {
+        if (
+            post.hasOwnProperty("upvotes") &&
+            post.hasOwnProperty("downvotes")
+        ) {
             post.votes = post.upvotes - post.downvotes;
         }
-        if (post.hasOwnProperty('timestamp')) {
+        if (post.hasOwnProperty("timestamp")) {
             post.timestampISO = utils.toISOString(post.timestamp);
         }
-        if (post.hasOwnProperty('edited')) {
-            post.editedISO = post.edited !== 0 ? utils.toISOString(post.edited) : '';
+        if (post.hasOwnProperty("edited")) {
+            post.editedISO =
+                post.edited !== 0 ? utils.toISOString(post.edited) : "";
         }
     }
 }
