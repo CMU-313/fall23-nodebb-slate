@@ -30,6 +30,9 @@ nconf.argv().env({
 const winston = require('winston');
 const path = require('path');
 
+const iroh = require('iroh');
+iroh.enable();
+
 const file = require('./src/file');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';

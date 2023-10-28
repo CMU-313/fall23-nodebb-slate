@@ -1,0 +1,40 @@
+{
+    "id": "nodebb-plugin-markdown",
+    "name": "Markdown Parser",
+    "description": "A Markdown parser for NodeBB",
+    "url": "https://github.com/julianlam/nodebb-plugin-markdown",
+    "library": "./index.js",
+    "less": [
+        "public/less/default.less"
+    ],
+    "scripts": [
+        "public/js/client.js"
+    ],
+    "staticDirs": {
+        "styles": "node_modules/highlight.js/styles"
+    },
+    "modules": {
+        "../admin/plugins/markdown.js": "./public/js/admin.js"
+    },
+    "languages": "public/languages",
+    "defaultLang": "en_GB",
+    "templates": "./public/templates",
+	"settingsRoute": "/admin/plugins/markdown",
+    "hooks": [
+        { "hook": "static:app.load", "method": "onLoad" },
+        { "hook": "filter:parse.post", "method": "parsePost", "priority": 5 },
+        { "hook": "filter:parse.signature", "method": "parseSignature", "priority": 5 },
+        { "hook": "filter:parse.aboutme", "method": "parseAboutMe"},
+        { "hook": "filter:parse.raw", "method": "parseRaw", "priority": 5 },
+        { "hook": "filter:composer.help", "method": "renderHelp" },
+        { "hook": "filter:admin.header.build", "method": "admin.menu" },
+        { "hook": "filter:composer.formatting", "method": "registerFormatting" },
+        { "hook": "filter:config.get", "method": "getConfig" },
+        { "hook": "filter:meta.getLinkTags", "method": "getLinkTags"},
+        { "hook": "filter:sanitize.config", "method": "updateSanitizeConfig" }
+    ],
+    "upgrades": [
+        "upgrades/reset_md_hljs_theme.js",
+        "upgrades/use_unminified_hljs_theme.js"
+    ]
+}

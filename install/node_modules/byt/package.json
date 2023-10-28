@@ -1,0 +1,29 @@
+{
+  "name": "byt",
+  "version": "0.1.0",
+  "description": "Convert arbitrary unit strings into byte counts",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "~2.1.0"
+  },
+  "scripts": {
+    "test": "node test/byt.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dstokes/byt.git"
+  },
+  "keywords": [
+    "byte",
+    "convert",
+    "mb",
+    "gb",
+    "kb"
+  ],
+  "author": "Drew Stokes",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/dstokes/byt/issues"
+  }
+}

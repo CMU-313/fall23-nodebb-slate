@@ -1,0 +1,129 @@
+.emoji-dialog {
+  &.open {
+    display: flex;
+  }
+
+  display: none;
+
+  z-index: 10001;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-height: 100vh;
+
+  height: 400px;
+  width: 400px;
+
+  flex-direction: column;
+  justify-content: flex-start;
+
+  border: 1px solid @modal-content-border-color;
+  border-radius: 11px;
+  background: @modal-content-bg;
+  overflow: auto;
+
+  .top-bar {
+    height: 15px;
+    background: #eee;
+    flex-shrink: 0;
+  }
+}
+
+
+@media (max-width: @screen-sm-max) {
+  html.composing.emoji-insert .composer {
+    bottom: calc(~"40% - 36px");
+    height: auto;
+  }
+
+  .emoji-dialog {
+    z-index: 10001;
+
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 60% !important;
+
+    width: auto;
+    height: auto;
+    border: none;
+    border-radius: 0;
+
+    .top-bar {
+      display: none;
+    }
+  }
+
+  @media (max-height: 600px) {
+    .emoji-dialog {
+      top: 0 !important;
+    }
+  }
+}
+
+.emoji-tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .emoji-dialog-search-container {
+    display: flex;
+    flex-shrink: 0;
+
+    .emoji-dialog-search {
+      flex-grow: 2;
+    }
+
+    button.close {
+      opacity: 1;
+      width: 30px;
+
+      color: @input-color;
+      border: 1px solid @input-border;
+    }
+  }
+
+  .nav-tabs {
+    overflow: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    > li, html[data-dir="rtl"] & > li {
+      display: inline-block;
+      float: none;
+    }
+  }
+
+  .tab-content {
+    overflow: auto;
+    flex-shrink: 1;
+    flex-grow: 1;
+  }
+  .tab-pane {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    flex-wrap: wrap;
+
+    margin: auto;
+
+    &.active {
+      display: flex;
+    }
+  }
+}
+
+.emoji-link {
+  > span, > img {
+    height: 30px;
+    font-size: 30px;
+    line-height: 30px;
+  }
+
+  min-width: 40px;
+  min-height: 40px;
+  text-align: center;
+}

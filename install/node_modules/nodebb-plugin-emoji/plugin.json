@@ -1,0 +1,37 @@
+{
+  "library": "build/lib",
+  "less": [
+    "public/style.less"
+  ],
+  "acpLess": [
+    "acp/admin.less"
+  ],
+  "modules": {
+    "emoji.js": "build/public/lib/emoji.js",
+    "emoji-dialog.js": "build/public/lib/emoji-dialog.js",
+    "leven.js": "public/lib/leven.js",
+    "fuzzysearch.js": "public/lib/fuzzysearch.js",
+    "../admin/plugins/emoji.js": "build/acp/admin.js"
+  },
+  "staticDirs": {
+    "emoji": "build/emoji"
+  },
+  "scripts": [
+    "public/emoji-setup.js"
+  ],
+  "acpScripts": [
+    "public/emoji-setup.js"
+  ],
+  "languages": "public/language",
+  "defaultLang": "en-US",
+  "templates": "public/templates",
+  "hooks": [
+    { "hook": "static:app.load", "method": "init" },
+    { "hook": "filter:admin.header.build", "method": "adminMenu" },
+    { "hook": "filter:composer.formatting", "method": "composerFormatting", "priority": 19 },
+    { "hook": "filter:parse.raw", "method": "parse.raw", "priority": 9 },
+    { "hook": "filter:parse.post", "method": "parse.post", "priority": 9 },
+    { "hook": "filter:meta.getLinkTags", "method": "addStylesheet" },
+    { "hook": "filter:config.get", "method": "configGet" }
+  ]
+}

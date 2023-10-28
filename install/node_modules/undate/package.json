@@ -1,0 +1,67 @@
+{
+  "name": "undate",
+  "version": "0.3.0",
+  "description": "Undoable update for HTMLTextAreaElement",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "(rm -fr dist || true) && rollup -c",
+    "format": "run-p format:*",
+    "format:js": "prettier --write '*.js'",
+    "format:ts": "prettier --parser typescript --write 'src/**/*.ts'",
+    "test:karma": "karma start --single-run",
+    "test:prettier": "prettier --parser typescript -l 'src/**/*.ts'",
+    "test:tslint": "tslint --project .",
+    "test": "run-p test:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuku-t/undate.git"
+  },
+  "keywords": [
+    "textarea"
+  ],
+  "author": "Yuku Takahashi <taka84u9@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yuku-t/undate/issues"
+  },
+  "homepage": "https://github.com/yuku-t/undate#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-power-assert": "^2.0.0",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-detect-browsers": "^2.3.2",
+    "karma-edge-launcher": "^0.4.2",
+    "karma-firefox-launcher": "^1.1.0",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-mocha": "^1.3.0",
+    "karma-opera-launcher": "^1.0.0",
+    "karma-safari-launcher": "^1.0.0",
+    "karma-webpack": "^3.0.0",
+    "mocha": "^5.1.0",
+    "npm-run-all": "^4.1.2",
+    "power-assert": "^1.5.0",
+    "prettier": "^1.12.1",
+    "rollup": "^0.58.0",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-typescript2": "^0.13.0",
+    "sinon": "^4.5.0",
+    "ts-loader": "^4.2.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.10.0",
+    "typescript": "^2.8.1",
+    "webpack": "^4.6.0"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "semi": false
+  }
+}
