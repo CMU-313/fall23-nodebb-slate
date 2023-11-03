@@ -30,7 +30,7 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git add -A
-          git commit -m "Apply Prettier changes" || echo "No changes to commit"
+          git commit -m "prettier: Apply Prettier changes" || echo "No changes to commit"
           git push
 
       - name: Check that files are formatted with Prettier
