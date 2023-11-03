@@ -5,17 +5,33 @@ on:
     branches: [ main ]
 
 jobs:
-  prettier-check:
+  prettier:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }} # Required for permission to push.
+
       - name: Set up Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '14'
+
       - name: Install dependencies
         run: npm install
-      - name: Check formatting
+
+      - name: Run Prettier
+        run: npx prettier --write .
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add -A
+          git commit -m "Apply Prettier changes" || echo "No changes to commit"
+          git push
+
+      - name: Check that files are formatted with Prettier
         run: npx prettier --check .
-      - name: Fail if there are unformatted files
-        run: if [ -n "$(git status --porcelain)" ]; then git diff; exit 1; fi
